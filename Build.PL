@@ -1,0 +1,78 @@
+use strict;
+use warnings;
+use Module::Build;
+
+my $class = Module::Build->subclass(
+    class => 'My::Builder',
+    code => q{
+        sub make_executable {
+            my $self = shift;
+            my $lib = File::Spec->catfile(qw(lib Pod Site.pm));
+            for my $file (@_) {
+                next unless File::Basename::basename($file) eq 'podsite';
+                open my $fh, '>>', $file or die "Cannot open $file: $!\n";
+                open my $pod, '<', $lib or die "Cannot open $lib: $!\n";
+                while (<$pod>) {
+                    if (/^=head1\s+(?:Usage|Options|Author|Copyright)\b/) {
+                        print $fh $_;
+                        while (<$pod>) {
+                            last if /^=/ && $_ !~ /^=head1\s+(?:Usage|Options|Author|Copyright)\b/;
+                            print $fh $_;
+                        }
+                    }
+                }
+
+                close $pod or die die "Cannot close $lib: $!\n";
+                close $fh or die die "Cannot close $file: $!\n";
+                last;
+            }
+            $self->SUPER::make_executable(@_);
+        }
+    },
+);
+
+my $build = $class->new(
+    class => 'Module::Build::PodSite',
+    module_name        => 'Pod::Site',
+    license            => 'perl',
+    configure_requires => {
+        'Module::Build' => '0.35',
+    },
+    build_requires     => {
+        'Module::Build'    => '0.35',
+        'Test::File'       => 0,
+        'Test::More'       => '0.88',
+        'Test::MockModule' => '0.05',
+        'Test::XPath'      => '0.12',
+    },
+    requires           => {
+        'perl'              => 5.006002,
+        'File::Basename'    => 0,
+        'File::Copy'        => 0,
+        'File::Path'        => 0,
+        'File::Spec'        => 0,
+        'Getopt::Long'      => 0,
+        'HTML::Entities'    => 0,
+        'Module::Build'     => '0.34',
+        'Object::Tiny'      => 0,
+        'Pod::Simple'       => '3.12',
+        'Pod::Usage'        => 0,
+    },
+    recommends         => {
+        'Test::Pod'           => '1.41',
+        'Test::Pod::Coverage' => '1.06',
+    },
+    meta_merge         => {
+        resources => {
+            homepage   => 'http://search.cpan.org/dist/Pod-Site/',
+            bugtracker => 'http://github.com/theory/pod-site/issues/',
+            repository => 'http://github.com/theory/pod-site/tree/',
+        }
+    },
+);
+
+$build->add_build_element('js');
+$build->add_build_element('css');
+$build->create_build_script;
+
+

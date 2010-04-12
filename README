@@ -1,0 +1,35 @@
+Pod::Site
+=========
+
+Build browsable HTML documentation for your app
+
+Description
+-----------
+
+This program searches the lib and bin directories of an application source
+code root and generates a jQuery-powered documentation browser from all of the
+Perl modules and scripts that contain POD. It was originally designed for the
+[Bricolage][] project but is has evolved for general use. Have a look at the
+[Bricolage API][] to see a sample documentation browser in action.
+
+[Bricolage]: http://www.bricolagecms.org/
+[Bricolage API]: http://bricolagecms.org/docs/current/api/
+
+Support
+-------
+
+This module is stored in the [GitHub repository]. Feel free to fork and send
+pull requests. Please send bug reports to <bug-pod-browser@rt.cpan.org>.
+
+Author
+------
+
+[David E. Wheeler](http://justatheory.com) <<david@justatheory.com>>
+
+Copyright and License
+---------------------
+
+Copyright (c) 2004-2009 David E Wheeler. Some Rights Reserved.
+
+This module is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
