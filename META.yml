@@ -19,7 +19,7 @@ name: Pod-Site
 provides:
   Pod::Site:
     file: lib/Pod/Site.pm
-    version: 0.50
+    version: 0.51
   Pod::Site::Search:
     file: lib/Pod/Site.pm
   Pod::Site::XHTML:
@@ -44,4 +44,4 @@ resources:
   homepage: http://search.cpan.org/dist/Pod-Site/
   license: http://dev.perl.org/licenses/
   repository: http://github.com/theory/pod-site/tree/
-version: 0.50
+version: 0.51
